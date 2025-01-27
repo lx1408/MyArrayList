@@ -125,6 +125,9 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
         values[j] = temp;
     }
 
+    /**
+     * Служебный метод увеличивающий размер массива при заполнении
+     */
     private void grow() {
         if (size == values.length) {
             values = Arrays.copyOf(values, values.length + values.length/2); //увеличим в полтора раза
