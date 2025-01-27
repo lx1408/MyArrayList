@@ -1,24 +1,21 @@
 package com.aston.javabase;
 
+import java.util.Comparator;
+
 public class Main {
 
     public static void main(String[] args) {
         MyArrayList<Integer> list= new MyArrayListImpl<Integer>();
-        list.add(1);
+        list.add(8);
         list.add(2);
-        list.add(3);
-        list.add(3);
-        list.add(4);
         list.add(5);
+        list.add(2);
+        list.remove(3);
         System.out.println(list);
-        list.remove(1);
+        list.add(1);
+        list.add(9);
+        Comparator<Integer> comparator = (o1, o2) -> (o2-o1);
+        list.sort(comparator);
         System.out.println(list);
-        list.remove(0);
-        System.out.println(list);
-        System.out.println((list.get(2)));
-        System.out.println(list);
-        list.clear();
-        System.out.println(list);
-
     }
 }

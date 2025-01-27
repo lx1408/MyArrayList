@@ -1,5 +1,7 @@
 package com.aston.javabase;
 
+import java.util.Comparator;
+
 public interface MyArrayList <E>{
 
     /**
@@ -43,11 +45,12 @@ public interface MyArrayList <E>{
     void clear();
 
     /**
-     * Сортирует список в естественном порядке.
-     * Для чисел — по возрастанию, для строк — по алфавиту.
-     * Если элементы списка не поддерживают интерфейс Comparable, должно быть выброшено исключение.
+     * Сортирует элементы в списке с использованием алгоритма быстрой сортировки.
+     * Метод использует переданный компаратор для сравнения элементов.
+     *
+     * @param comparator компаратор, который определяет порядок сортировки.
      */
-    void sort();
+    void sort(Comparator<? super E> comparator);
 }
 
 

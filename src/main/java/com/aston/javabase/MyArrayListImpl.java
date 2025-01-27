@@ -1,7 +1,7 @@
 package com.aston.javabase;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class MyArrayListImpl<E> implements MyArrayList<E>{
 
@@ -20,6 +20,7 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
 
     /**
      * Конструктор, который инициализирует массив заданной длины.
+     *
      * @param length необходимый размер массива.
      * Размер массива увеличивается по мере добавления элементов.
      */
@@ -67,9 +68,61 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
         values = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
-    @Override
-    public void sort() {
 
+    @Override
+    public void sort(Comparator<? super E> comparator) {
+        quickSort(0, size - 1, comparator);
+    }
+
+    /**
+     * Рекурсивно выполняет сортировку подмассива с помощью алгоритма быстрой сортировки.
+     * Этот метод разбивает массив на две части относительно опорного элемента и сортирует их.
+     *
+     * @param low       индекс начала подмассива, который нужно отсортировать.
+     * @param high      индекс конца подмассива, который нужно отсортировать.
+     * @param comparator компаратор, который определяет порядок сортировки.
+     */
+    private void quickSort(int low, int high, Comparator<? super E> comparator) {
+        if (low < high) {
+            int pivotIndex = partition(low, high, comparator);
+            quickSort(low, pivotIndex - 1, comparator);  // Сортировка левой части
+            quickSort(pivotIndex + 1, high, comparator); // Сортировка правой части
+        }
+    }
+
+    /**
+     * Разделяет массив на две части относительно опорного элемента и возвращает индекс опорного элемента.
+     * Элементы, меньшие или равные опорному элементу, будут в левой части, а большие — в правой.
+     *
+     * @param low       индекс начала подмассива для разделения.
+     * @param high      индекс конца подмассива для разделения.
+     * @param comparator компаратор, который определяет порядок сортировки.
+     * @return индекс опорного элемента после его размещения на своём месте.
+     */
+    private int partition(int low, int high, Comparator<? super E> comparator) {
+        E pivot = values[high];
+        int i = (low - 1);
+
+        for (int j = low; j < high; j++) {
+            if (comparator.compare(values[j], pivot) <= 0) {
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, high);
+        return i + 1;
+    }
+
+    /**
+     * Меняет местами два элемента в массиве.
+     *
+     * @param i индекс первого элемента для обмена.
+     * @param j индекс второго элемента для обмена.
+     */
+    private void swap(int i, int j) {
+        E temp = values[i];
+        values[i] = values[j];
+        values[j] = temp;
     }
 
     private void grow() {
@@ -81,4 +134,7 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
     public String toString(){
         return Arrays.toString(values);
     }
+
+
 }
+
