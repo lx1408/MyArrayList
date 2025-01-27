@@ -38,6 +38,7 @@ public class MyArrayListImpl<E> implements MyArrayList<E>{
 
     @Override
     public void add(int index, E e) {
+        if (index<0 || index > (size-1))  throw new ArrayIndexOutOfBoundsException();
         grow();
         System.arraycopy(values, index, values, index + 1, size - index);   //сдвигаем после индекса массив вправо, вставляем элемент по индексу
         values[index] = e;
